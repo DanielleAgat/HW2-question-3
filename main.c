@@ -11,22 +11,8 @@
 #define END_OF_STR '\0'
 #define ENTER '\n'
 
-char** setPtrToCharsArray(char** str_array){
-    char** res;
-    int size, i;
-    int str_array_row, str_array_col;
-
-    scanf("%d", &size); // Get number of ptrs
-    res = (char**)malloc(sizeof(char*)*(size+1)); // Add 1 for NULL at the end
-
-    for (i = 0; i < size; i++){
-        scanf("%d", &str_array_row);
-        scanf("%d", &str_array_col);
-        res[i] = str_array[str_array_row] + str_array_col;
-    }
-    res[size] = NULL; // Set the last one to NULL
-    return res;
-}
+//A given function - sets pointers to cells in a char matrix.
+char** setPtrToCharsArray(char** str_array);
 
 //This function gets a pointer to an array of strings and an array of pointers to chars in those string, and removes the chars of the pointers array.
 unsigned int RemoveFromStrArray(char ***str_array, unsigned int str_array_size, char** ptr_to_chars_array);
@@ -68,7 +54,7 @@ int main(){
 
 
 unsigned int RemoveFromStrArray(char ***str_array, unsigned int str_array_size, char** ptr_to_chars_array){
-
+    return 0;
 }
 
 
@@ -82,6 +68,9 @@ char** getStrArrayInput(int* pSize){
     for(int i=0; i<size; i++){
         str_array[i] = scanLine();
     }
+
+    *pSize = size;
+    return str_array;
 }
 
 char* scanLine(){
@@ -89,7 +78,9 @@ char* scanLine(){
     char* line = (char*)malloc(sizeof(char)*phySize);
     checkIfMallocSucceeded(line);
 
-    char scanned = getchar();
+    char scanned;
+    while((scanned = getchar())== ENTER); //Emptying the buffer from previous inputs.
+
     while(scanned != ENTER ){ //scans a string until Enter is being scanned
         if(logSize < phySize){
             line[logSize++] = scanned;
@@ -123,7 +114,8 @@ void printArray(char** str_array,int size){
 
 void println(char* line){
     for(int i=0; line[i] != '\0'; i++)
-        printf(line[i]);
+        printf("%c",line[i]);
+    printf("\n");
 }
 
 void freeArray(char** str_array,int size){
@@ -136,4 +128,21 @@ void checkIfMallocSucceeded(void* ptr){
         printf("ERROR: Out of memory!\n");
         exit(1);
     }
+}
+
+char** setPtrToCharsArray(char** str_array){
+    char** res;
+    int size, i;
+    int str_array_row, str_array_col;
+
+    scanf("%d", &size); // Get number of ptrs
+    res = (char**)malloc(sizeof(char*)*(size+1)); // Add 1 for NULL at the end
+
+    for (i = 0; i < size; i++){
+        scanf("%d", &str_array_row);
+        scanf("%d", &str_array_col);
+        res[i] = str_array[str_array_row] + str_array_col;
+    }
+    res[size] = NULL; // Set the last one to NULL
+    return res;
 }
