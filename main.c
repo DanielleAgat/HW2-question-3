@@ -89,7 +89,6 @@ char** removeEmptyCells(char** str_array, unsigned int str_array_size){
     for(int i=0; index < str_array_size ; i++){
         if(*(str_array[i]) != END_OF_STR){
             temp[index] = str_array[i];
-//            println(temp[index]);
             index++;
         }
     }
